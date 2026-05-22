@@ -9,26 +9,26 @@ DOTS³ is a browser-based tool for the creation of **intersecting circle puzzles
 
 ## Key Features
 
-- **Up to 4 Circles:** Create intricate patterns with up to four fully configurable circles.
+- **Up to 5 Circles:** Create intricate patterns with up to five fully configurable circles.
 - **Interactive UI:** Full control via mouse and keyboard, including draggable markers and sliders.
 - **Old Interface:** This fork makes changes to an older version of DOTS³, as I prefer the interface over the latest release.
 - **Black Background:** Long gone are the days of eye strain due to the blinding #FFFFFF background.
 
 ## Hotkeys
 
-| Key / Combination  | Action                                             |
-| :----------------- | :------------------------------------------------- |
-| `←`, `↑`, `→`, `↓` | Pan the canvas. Holding down accelerates movement.                                                      |
-| `Mouse Wheel`      | Zoom In/Out relative to the cursor. Changes the number of steps and the angle of said steps of circles. |
-| `[`                | Zoom Out.                                                                                               |
-| `]`                | Zoom In.                                                                                                |
-| `1`, `2`, `3`, `4` | Toggle circles A, B, C, D respectively.                                                                 |
-| `A`                | Show/hide the information panels.                                                                       |
-| `D`                | Cycle through renderers.                                                                                |
-| `W`                | Switch between color and grayscale mode.                                                                |
-| `A`                | Toggle sliders panel.                                                                                   |
-| `H`                | Show/hide help panel.                                                                                   |
-| `Left click`       | Move center of circle/change radius of circle.                                                          |
+| Key / Combination       | Action                                                                                                  |
+| :---------------------- | :------------------------------------------------------------------------------------------------------ |
+| `←`, `↑`, `→`, `↓`      | Pan the canvas. Holding down accelerates movement.                                                      |
+| `Mouse Wheel`           | Zoom In/Out relative to the cursor. Changes the number of steps and the angle of said steps of circles. |
+| `[`                     | Zoom Out.                                                                                               |
+| `]`                     | Zoom In.                                                                                                |
+| `1`, `2`, `3`, `4`, `5` | Toggle circles A, B, C, D, and E respectively.                                                          |
+| `A`                     | Show/hide the information panels.                                                                       |
+| `D`                     | Cycle through renderers.                                                                                |
+| `W`                     | Switch between color and grayscale mode.                                                                |
+| `A`                     | Toggle sliders panel.                                                                                   |
+| `H`                     | Show/hide help panel.                                                                                   |
+| `Left click`            | Move center of circle/change radius of circle.                                                          |
 
 ## Acknowledgements
 
