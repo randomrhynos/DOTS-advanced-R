@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title id="pageTitle">DOTS</title>
     <style>
-        body { 
-            margin: 0; 
-            background-color: #ffffff;
-            color: #000000;
+        body {
+            margin: 0;
+            background-color: #000000;
+            color: #ffffff;
         }
         .normalpage { margin: 5px; }
         #canvas { position:fixed; left:0; top:0; width:100%; height:100%; z-index:-1; }
@@ -69,7 +69,7 @@
   <script>
 
     var APP_VERSION = "1.7.2";
-    var APP_TITLE = "Dynamic Orbit Tracing Simulator - DOTS v" + APP_VERSION;
+    var APP_TITLE = "Dynamic Orbit Tracing Simulator - DOTS v" + APP_VERSION + "R";
 
     var width = 800;
     var height = 600;
@@ -83,7 +83,7 @@
     var distA, distB, distC, distD, angleA, angleB, angleC, angleD
     var ax, ay, bx, by, cx, cy, dx, dy, sc
     var uga, ugb, ugc, ugd
-   
+
     var deepest = 0;
     var renderlim = 1000;
     var pallete = [];
@@ -112,7 +112,7 @@
 
     var mouseX = 0, mouseY = 0;
     var draggingCenter = null; // 'A', 'B', 'C', 'D'
-    var draggingRadius = null; 
+    var draggingRadius = null;
     var lastDraggedCenter = null;
     var draggingCanvas = false;
     var dragStartX = 0;
@@ -152,7 +152,7 @@
         document.getElementById('blockA').style.display = activeA ? 'block' : 'none';
         document.getElementById('blockB').style.display = activeB ? 'block' : 'none';
         document.getElementById('blockC').style.display = activeC ? 'block' : 'none';
-        document.getElementById('blockD').style.display = activeD ? 'block' : 'none';  
+        document.getElementById('blockD').style.display = activeD ? 'block' : 'none';
     }
 
     function updateAnglesInfo() {
@@ -160,7 +160,7 @@
         if (activeA) parts.push(roundToDecimalPlaces((uga/an)%360,3));
         if (activeB) parts.push(roundToDecimalPlaces((ugb/bn)%360,3));
         if (activeC) parts.push(roundToDecimalPlaces((ugc/cn)%360,3));
-        if (activeD) parts.push(roundToDecimalPlaces((ugd/dn)%360,3));    
+        if (activeD) parts.push(roundToDecimalPlaces((ugd/dn)%360,3));
         document.getElementById("angle").innerText = parts.join(", ") + " angles";
     }
 
@@ -186,13 +186,13 @@
     function changeOrigin(dir) {
         var delta = 0;
         if (dir == 37 || dir == 39) {
-            delta = 100;
+            delta = 35 * zoom;
             if (dir == 39)
                 delta = - delta;
                 delta /= zoom;
                 xoff += delta;
         } else {
-            delta = 100;
+            delta = 35 * zoom;
             if (dir == 40)
                 delta = - delta;
                 delta /= zoom;
@@ -443,7 +443,7 @@
                             activeA ? Math.abs(distToA - ar) : Infinity,
                             activeB ? Math.abs(distToB - br) : Infinity,
                             activeC ? Math.abs(distToC - cr) : Infinity,
-                            activeD ? Math.abs(distToD - dr) : Infinity                            
+                            activeD ? Math.abs(distToD - dr) : Infinity
                         );
 
                         if (activeA && Math.abs(distToA - ar) === minDist) {
@@ -626,8 +626,8 @@
 
         ctx.restore();
 
-        if (activeA) { 
-            // Маркер центра A 
+        if (activeA) {
+            // Маркер центра A
             ctx.strokeStyle = colorA; // синий
             drawcirc(ctx, ax, ay, ar * sc);
             drawCenterMarker(ctx, ax, ay, colorA);
@@ -688,7 +688,7 @@
             ctx.strokeStyle = "#8800ff";
             drawcirc(ctx, dx, dy, dr * sc);
             drawCenterMarker(ctx, dx, dy, "#8800ff");
-            // Маркер радиуса D            
+            // Маркер радиуса D
             const angleD = 70 * Math.PI / 180;
             const markerDx = dx + dr * sc * Math.cos(angleD);
             const markerDy = dy + dr * sc * Math.sin(angleD);
@@ -794,23 +794,23 @@
 
         if (candidates.length === 0) return null;
         return candidates[0];
-    }    
+    }
 
 
     function updateCenterFromMouse(center) {
         const canvasX = mouseX;
         const canvasY = mouseY;
-        
+
         var centerX = xoff / zoom + width / 2;
         var centerY = yoff / zoom + height / 2;
-        
+
         // Мировые координаты курсора
         const worldMouseX = (canvasX - centerX) / sc;
         const worldMouseY = (canvasY - centerY) / sc;
-        
+
         const dist = Math.hypot(worldMouseX, worldMouseY);
         const angle = (Math.atan2(worldMouseY, worldMouseX) * 180 / Math.PI + 360) % 360;
-        
+
         if (center === 'A') {
             document.getElementById("distA").value = Math.max(0, Math.min(10, dist));
             document.getElementById("angleA").value = angle;
@@ -913,7 +913,7 @@
             xoff = 0;
             yoff = 0;
             doanim();
-        } else if (e.code === "BracketLeft") { // уменьшить масштаб
+        } else if (e.code === "BracketRight") { // уменьшить масштаб
             var z = getvalue("zoom");
             z = z / 1.1;
             z = Math.floor(z * 1000) / 1000;
@@ -924,7 +924,7 @@
                 document.getElementById("zoom").value = z;
             }
             doanim();
-        } else if (e.code === "BracketRight") { // увеличить масштаб
+        } else if (e.code === "BracketLeft") { // увеличить масштаб
             var z = getvalue("zoom");
             z = z * 1.1;
             z = Math.floor(z * 1000) / 1000;
@@ -1273,29 +1273,29 @@
             document.getElementById('activeC').checked = true;
             document.getElementById('activeD').checked = true;
 
-            document.getElementById('arad').value = 1.3;
-            document.getElementById('brad').value = 0.89;
-            document.getElementById('crad').value = 1.03;
-            document.getElementById('drad').value = 0.49;
+            document.getElementById('arad').value = 1;
+            document.getElementById('brad').value = 1;
+            document.getElementById('crad').value = 1;
+            document.getElementById('drad').value = 1;
 
             document.getElementById('uga').value = 360;
             document.getElementById('ugb').value = 360;
             document.getElementById('ugc').value = 360;
-            document.getElementById('ugd').value = 360;        
+            document.getElementById('ugd').value = 360;
 
-            document.getElementById('an').value = 3;
-            document.getElementById('bn').value = 2;
-            document.getElementById('cn').value = 2;
-            document.getElementById('dn').value = 2;
+            document.getElementById('an').value = 4;
+            document.getElementById('bn').value = 4;
+            document.getElementById('cn').value = 4;
+            document.getElementById('dn').value = 4;
 
             document.getElementById("distA").value = 0;
             document.getElementById("angleA").value = 0;
-            document.getElementById("distB").value = 1.63;
+            document.getElementById("distB").value = 1.42;
             document.getElementById("angleB").value = 0;
-            document.getElementById("distC").value = 0.94;
-            document.getElementById("angleC").value = 310;
-            document.getElementById("distD").value = 1.35;
-            document.getElementById("angleD").value = 38.8;
+            document.getElementById("distC").value = 2.84;
+            document.getElementById("angleC").value = 0;
+            document.getElementById("distD").value = 4.26;
+            document.getElementById("angleD").value = 0;
 
             document.getElementById('zoom').value = 1;
 
@@ -1304,7 +1304,7 @@
 
     window.onresize = doanim;
 
-    canvas.addEventListener('mousemove', onMouseMove);        
+    canvas.addEventListener('mousemove', onMouseMove);
     canvas.addEventListener('mousedown', onMouseDown);
     canvas.addEventListener('mouseup', onMouseUp);
     canvas.addEventListener('wheel', onMouseWheel);
@@ -1356,7 +1356,7 @@ window.onload = start;
             <div>
                 <span style="margin-right: 15px;">📸 <kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">S</kbd> Screenshot</span>
                 <span style="margin-right: 15px;">🎚️🎚️🎚️ <kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">A</kbd> Panel</span>
-                <span style="margin-right: 15px;">🧭 <kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">↑</kbd><kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">↓</kbd><kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">←</kbd><kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">→</kbd> Move</span>            
+                <span style="margin-right: 15px;">🧭 <kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">↑</kbd><kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">↓</kbd><kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">←</kbd><kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">→</kbd> Move</span>
                 <span>❓ <kbd style="background: #333; padding: 2px 6px; border-radius: 3px; border: 1px solid #555; font-size: 0.78rem;">H</kbd> Hide help</span>
             </div>
             <div>
@@ -1379,10 +1379,9 @@ window.onload = start;
                     <span><input id="activeB" type="checkbox" checked> B</span>
                     <span><input id="activeC" type="checkbox" checked> C</span>
                     <span><input id="activeD" type="checkbox" checked> D</span>
-                    <span style="flex-grow: 1; text-align: center; background-color: #EDEDED; padding: 5px 15px; margin-left: 20px; border-radius: 4px;">
-                        <strong id="appTitle" style="color: #000000; font-family: Arial, sans-serif; font-size: 15px;"></strong>
+                    <span style="flex-grow: 1; text-align: center; background-color: #2F2F2F; padding: 5px 15px; margin-left: 20px; border-radius: 4px;">
+                        <strong id="appTitle" style="color: #FFFFFF; font-family: Arial, sans-serif; font-size: 15px;"></strong>
                         <span style="font-size: 8px; text-align: center; opacity: 0.01; color: #6699ff;">    ✶✶✶✶✶    </span>
-                        <strong style="color: #E64B2F; font-family: Arial, sans-serif; font-size: 18px;"> ❄️🎄 NY2026 🎄❄️ </strong>                        
                     </span>
                 </div>
 
@@ -1391,12 +1390,12 @@ window.onload = start;
                     <div class="control-row">
                         <label for="arad">Radius A:&nbsp;</label>
                         <span id="showarad" class="value"></span>
-                        <input id="arad" type="range" step="0.01" min="0" max="10" value="1.3">
+                        <input id="arad" type="range" step="0.01" min="0.5" max="10" value="1">
                     </div>
                     <div class="control-row">
                         <label for="an">Spin A:&nbsp;</label>
                         <span id="showan" class="value"></span>
-                        <input id="an" type="range" step="1" min="2" max="20" value="3" style="flex: 0.75 1 auto;">
+                        <input id="an" type="range" step="1" min="2" max="20" value="4" style="flex: 0.75 1 auto;">
                         <label for="uga" style="margin-left: 15px">Angle A:&nbsp;</label>
                         <span id="showuga" class="value"></span>
                         <input id="uga" type="range" step="360" min="-360" max="2160" value="360" style="flex: 0.25 1 auto;">
@@ -1404,7 +1403,7 @@ window.onload = start;
                     <div class="control-row">
                         <label for="distA">Distance A:&nbsp;</label>
                         <span id="showdistA" class="value"></span>
-                        <input id="distA" type="range" step="0.01" min="0" max="10" value="0">
+                        <input id="distA" type="range" step="0.005" min="0" max="10" value="0">
                     </div>
                     <div class="control-row">
                         <label for="angleA">Angle A pos:&nbsp;</label>
@@ -1418,12 +1417,12 @@ window.onload = start;
                     <div class="control-row">
                         <label for="brad">Radius B:&nbsp;</label>
                         <span id="showbrad" class="value"></span>
-                        <input id="brad" type="range" step="0.01" min="0" max="10" value="0.89">
+                        <input id="brad" type="range" step="0.01" min="0.5" max="10" value="1">
                     </div>
                     <div class="control-row">
                         <label for="bn">Spin B:&nbsp;</label>
                         <span id="showbn" class="value"></span>
-                        <input id="bn" type="range" step="1" min="2" max="20" value="2" style="flex: 0.75 1 auto;">
+                        <input id="bn" type="range" step="1" min="2" max="20" value="4" style="flex: 0.75 1 auto;">
                         <label for="ugb" style="margin-left: 15px">Angle B:&nbsp;</label>
                         <span id="showugb" class="value"></span>
                         <input id="ugb" type="range" step="360" min="-360" max="2160" value="360" style="flex: 0.25 1 auto;">
@@ -1431,7 +1430,7 @@ window.onload = start;
                     <div class="control-row">
                         <label for="distB">Distance B:&nbsp;</label>
                         <span id="showdistB" class="value"></span>
-                        <input id="distB" type="range" step="0.01" min="0" max="10" value="1.63">
+                        <input id="distB" type="range" step="0.005" min="0" max="10" value="1.42">
                     </div>
                     <div class="control-row">
                         <label for="angleB">Angle B pos:&nbsp;</label>
@@ -1445,12 +1444,12 @@ window.onload = start;
                     <div class="control-row">
                         <label for="crad">Radius C:&nbsp;</label>
                         <span id="showcrad" class="value"></span>
-                        <input id="crad" type="range" step="0.01" min="0" max="10" value="1.03">
+                        <input id="crad" type="range" step="0.01" min="0.5" max="10" value="1">
                     </div>
                     <div class="control-row">
                         <label for="cn">Spin C:&nbsp;</label>
                         <span id="showcn" class="value"></span>
-                        <input id="cn" type="range" step="1" min="2" max="20" value="2" style="flex: 0.75 1 auto;">
+                        <input id="cn" type="range" step="1" min="2" max="20" value="4" style="flex: 0.75 1 auto;">
                         <label for="ugc" style="margin-left: 15px">Angle C:&nbsp;</label>
                         <span id="showugc" class="value"></span>
                         <input id="ugc" type="range" step="360" min="-360" max="2160" value="360" style="flex: 0.25 1 auto;">
@@ -1458,12 +1457,12 @@ window.onload = start;
                     <div class="control-row">
                         <label for="distC">Distance C:&nbsp;</label>
                         <span id="showdistC" class="value"></span>
-                        <input id="distC" type="range" step="0.01" min="0" max="10" value="0.94">
+                        <input id="distC" type="range" step="0.005" min="0" max="10" value="2.84">
                     </div>
                     <div class="control-row">
                         <label for="angleC">Angle C pos:&nbsp;</label>
                         <span id="showangleC" class="value"></span>
-                        <input id="angleC" type="range" step="0.1" min="0" max="360" value="310">
+                        <input id="angleC" type="range" step="0.1" min="0" max="360" value="0">
                     </div>
                 </div>
 
@@ -1472,12 +1471,12 @@ window.onload = start;
                     <div class="control-row">
                         <label for="drad">Radius D:&nbsp;</label>
                         <span id="showdrad" class="value"></span>
-                        <input id="drad" type="range" step="0.01" min="0" max="10" value="0.49">
+                        <input id="drad" type="range" step="0.01" min="0.5" max="10" value="1">
                     </div>
                     <div class="control-row">
                         <label for="dn">Spin D:&nbsp;</label>
                         <span id="showdn" class="value"></span>
-                        <input id="dn" type="range" step="1" min="2" max="20" value="2" style="flex: 0.75 1 auto;">
+                        <input id="dn" type="range" step="1" min="2" max="20" value="4" style="flex: 0.75 1 auto;">
                         <label for="ugd" style="margin-left: 15px">Angle D:&nbsp;</label>
                         <span id="showugd" class="value"></span>
                         <input id="ugd" type="range" step="360" min="-360" max="2160" value="360" style="flex: 0.25 1 auto;">
@@ -1485,12 +1484,12 @@ window.onload = start;
                     <div class="control-row">
                         <label for="distD">Distance D:&nbsp;</label>
                         <span id="showdistD" class="value"></span>
-                        <input id="distD" type="range" step="0.01" min="0" max="10" value="1.35">
+                        <input id="distD" type="range" step="0.005" min="0" max="10" value="4.26">
                     </div>
                     <div class="control-row">
                         <label for="angleD">Angle D pos:&nbsp;</label>
                         <span id="showangleD" class="value"></span>
-                        <input id="angleD" type="range" step="0.1" min="0" max="360" value="38.8">
+                        <input id="angleD" type="range" step="0.1" min="0" max="360" value="0">
                     </div>
                 </div>
 
@@ -1499,7 +1498,7 @@ window.onload = start;
                     <div class="control-row">
                         <label for="zoom">Zoom:&nbsp;</label>
                         <span id="showzoom" class="value"></span>
-                        <input id="zoom" min="0.5" step="0.1" max="10" type="range" value="1">
+                        <input id="zoom" min="0.5" step="0.1" max="10" type="range" value="0.5">
                     </div>
                 </div>
 
