@@ -42,7 +42,4 @@ This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md)
 
 ## Support
 
-If you find this project useful and would like to support its development, go donate to b10101101. I didn't do much here.
-
-- **Bitcoin (BTC):** `bc1qxjt4h7fevyfhmysplzps8sw5sf00uf3zvf3hes`
-- **Toncoin (TON):** `UQDQPcMCmmfiaIzKf5ID6LM9zHgL1xn8hWSftPOShxl3sJTy`
+If you find this project useful and would like to support its development, [go donate to b10101101](https://github.com/b10101101/DOTS-advanced/blob/main/README.md#Support). I didn't do much here.
